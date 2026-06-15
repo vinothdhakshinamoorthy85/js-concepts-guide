@@ -1,0 +1,10 @@
+@import 'common.scss';
+
+/* closures page-specific accents (if needed) */
+
+/* Example: make the badge and marks use the purple accent */
+.badge { background: #a855f722; color: #a855f7; }
+
+.ch div[style*="color:#a855f7"] { color: #a855f7; }
+
+button.run { background: #a855f7; color: #0f172a; }

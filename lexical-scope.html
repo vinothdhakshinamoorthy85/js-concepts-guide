@@ -1,16 +1,31 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Lexical Scope | JS Concepts</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css"><style>body{background:#0f172a;color:#e2e8f0;font-family:system-ui,sans-serif;margin:0;}*{box-sizing:border-box;}nav{position:sticky;top:0;z-index:100;background:rgba(15,23,42,.96);backdrop-filter:blur(8px);border-bottom:1px solid #1e293b;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;}.wrap{max-width:860px;margin:0 auto;padding:0 24px;}.hero{max-width:860px;margin:0 auto;padding:52px 24px 28px;}.badge{display:inline-block;padding:4px 14px;border-radius:9999px;font-size:12px;font-weight:700;margin-bottom:14px;}.def{border-radius:8px;padding:16px 20px;margin-bottom:40px;line-height:1.7;font-size:15px;color:#cbd5e1;}.card{background:#1e293b;border:1px solid #334155;border-radius:12px;overflow:hidden;margin-bottom:28px;}.ch{padding:16px 20px;border-bottom:1px solid #334155;}.cb{padding:20px;}.ow{margin-top:14px;display:none;}.out{background:#020617;border:1px solid #4ade80;border-radius:8px;padding:12px 16px;font-family:Consolas,'Courier New',monospace;font-size:13px;color:#4ade80;white-space:pre-wrap;min-height:38px;}.tip{background:#0f172a;border:1px solid #334155;border-radius:8px;padding:12px 16px;margin-top:16px;}button.run{padding:9px 26px;border:none;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer;transition:.15s;display:block;margin:0 0 0 auto;}button.run:hover{opacity:.85;transform:translateY(-1px);}table{width:100%;border-collapse:collapse;}th{text-align:left;padding:12px 16px;background:#0f172a;font-size:13px;color:#94a3b8;border-bottom:1px solid #334155;font-weight:600;}td{padding:11px 16px;border-bottom:1px solid #1e293b;font-size:14px;color:#cbd5e1;}tr:last-child td{border-bottom:none;}footer{text-align:center;color:#475569;font-size:13px;padding:28px;border-top:1px solid #1e293b;margin-top:48px;}a{text-decoration:none;}@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;}}.fi{animation:fi .3s ease;}pre[class*=language-]{margin:0 0 14px!important;border-radius:8px!important;border:1px solid #30363d!important;}code[class*=language-],pre[class*=language-]{font-size:13px!important;line-height:1.7!important;}</style></head><body><nav><a href="index.html" style="color:#94a3b8;font-size:14px;">&larr; All Concepts</a><span style="color:#3b82f6;font-weight:700;font-size:15px;">Lexical Scope</span><div style="display:flex;gap:16px;"><a href="closures.html" style="color:#94a3b8;font-size:13px;">&larr; Closures</a><a href="prototypes.html" style="color:#94a3b8;font-size:13px;">Prototypes &rarr;</a></div></nav><div class="hero"><div class="badge" style="background:#3b82f622;color:#3b82f6;">🗺️ Lexical Scope</div><h1 style="font-size:2.2rem;font-weight:800;margin:0 0 8px;color:#f8fafc;">Lexical Scope</h1><p style="color:#94a3b8;font-size:1.05rem;margin:0 0 24px;">Scope determined by where code is written, not where it is called</p><div class="def" style="border-left:4px solid #3b82f6;background:#1e293b;">Lexical scope means a variable's accessibility is determined at author time — by where the function is written in the source code, not where or how it is called at runtime. JavaScript resolves variables by walking outward through enclosing scopes.</div></div><div class="wrap"><div class="card"><div class="ch"><div style="font-size:11px;color:#3b82f6;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Example 1</div><h3 style="margin:0 0 4px;color:#f1f5f9;font-size:16px;">Scope Chain</h3><p style="margin:0;color:#94a3b8;font-size:13px;">Inner functions can read variables from all enclosing scopes</p></div><div class="cb"><pre><code class="language-javascript" id="l1-code">const level1 = &#x27;global&#x27;;
-
 function scopeA() {
-  const level2 = &#x27;scopeA&#x27;;
-  function scopeB() {
-    const level3 = &#x27;scopeB&#x27;;
-    console.log(level3); // own scope
-    console.log(level2); // outer scope
-    console.log(level1); // global scope
-  }
-  scopeB();
+const level2 = &#x27;scopeA&#x27;;
+function scopeB() {
+const level3 = &#x27;scopeB&#x27;;
+console.log(level3); // own scope
+console.log(level2); // outer scope
+console.log(level1); // global scope
 }
-scopeA();</code></pre><button class="run" onclick="runCode('l1')" style="background:#3b82f6;color:#0f172a;">&#9654; Run</button><div class="ow" id="l1-w"><div style="color:#4ade80;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">&#10003; Output</div><div class="out" id="l1-o"></div></div><div class="tip"><span style="color:#3b82f6;font-size:12px;font-weight:700;">&#128161; What happened?</span><p style="margin:4px 0 0;color:#94a3b8;font-size:13px;line-height:1.6;">JS walks outward through the scope chain until it finds each variable. scopeB can see its own scope, scopeA's scope, and the global scope — all at once.</p></div></div></div><div class="card"><div class="ch"><div style="font-size:11px;color:#3b82f6;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Example 2</div><h3 style="margin:0 0 4px;color:#f1f5f9;font-size:16px;">Lexical vs Dynamic Scope</h3><p style="margin:0;color:#94a3b8;font-size:13px;">Scope is locked where the function is WRITTEN, not where it is called</p></div><div class="cb"><pre><code class="language-javascript" id="l2-code">const lang = &#x27;JavaScript&#x27;;
+scopeB();
+}
+scopeA();</code></pre><button class="run" onclick="runCode('l1')" style="background:#3b82f6;color:#0f172a;">&#9654; Run</button>
+<div class="ow" id="l1-w">
+   <div style="color:#4ade80;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">&#10003; Output</div>
+   <div class="out" id="l1-o"></div>
+</div>
+<div class="tip">
+   <span style="color:#3b82f6;font-size:12px;font-weight:700;">&#128161; What happened?</span>
+   <p style="margin:4px 0 0;color:#94a3b8;font-size:13px;line-height:1.6;">JS walks outward through the scope chain until it finds each variable. scopeB can see its own scope, scopeA's scope, and the global scope — all at once.</p>
+</div>
+</div></div>
+<div class="card">
+   <div class="ch">
+      <div style="font-size:11px;color:#3b82f6;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Example 2</div>
+      <h3 style="margin:0 0 4px;color:#f1f5f9;font-size:16px;">Lexical vs Dynamic Scope</h3>
+      <p style="margin:0;color:#94a3b8;font-size:13px;">Scope is locked where the function is WRITTEN, not where it is called</p>
+   </div>
+   <div class="cb">
+      <pre><code class="language-javascript" id="l2-code">const lang = &#x27;JavaScript&#x27;;
 
 function printLang() {
   // Scope locked at definition time — not call time
@@ -20,7 +35,26 @@ function wrapper() {
   const lang = &#x27;Python&#x27;; // does NOT affect printLang
   printLang();           // still prints &#x27;JavaScript&#x27;
 }
-wrapper();</code></pre><button class="run" onclick="runCode('l2')" style="background:#3b82f6;color:#0f172a;">&#9654; Run</button><div class="ow" id="l2-w"><div style="color:#4ade80;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">&#10003; Output</div><div class="out" id="l2-o"></div></div><div class="tip"><span style="color:#3b82f6;font-size:12px;font-weight:700;">&#128161; What happened?</span><p style="margin:4px 0 0;color:#94a3b8;font-size:13px;line-height:1.6;">printLang was defined in the global scope, so it reads global lang='JavaScript'. The local lang='Python' inside wrapper() is invisible to it — lexical scope wins.</p></div></div></div><div class="card"><div class="ch"><div style="font-size:11px;color:#3b82f6;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Example 3</div><h3 style="margin:0 0 4px;color:#f1f5f9;font-size:16px;">Block Scope — let vs var</h3><p style="margin:0;color:#94a3b8;font-size:13px;">let and const create a new scope per {} block</p></div><div class="cb"><pre><code class="language-javascript" id="l3-code">function example() {
+wrapper();</code></pre>
+      <button class="run" onclick="runCode('l2')" style="background:#3b82f6;color:#0f172a;">&#9654; Run</button>
+      <div class="ow" id="l2-w">
+         <div style="color:#4ade80;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">&#10003; Output</div>
+         <div class="out" id="l2-o"></div>
+      </div>
+      <div class="tip">
+         <span style="color:#3b82f6;font-size:12px;font-weight:700;">&#128161; What happened?</span>
+         <p style="margin:4px 0 0;color:#94a3b8;font-size:13px;line-height:1.6;">printLang was defined in the global scope, so it reads global lang='JavaScript'. The local lang='Python' inside wrapper() is invisible to it — lexical scope wins.</p>
+      </div>
+   </div>
+</div>
+<div class="card">
+   <div class="ch">
+      <div style="font-size:11px;color:#3b82f6;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Example 3</div>
+      <h3 style="margin:0 0 4px;color:#f1f5f9;font-size:16px;">Block Scope — let vs var</h3>
+      <p style="margin:0;color:#94a3b8;font-size:13px;">let and const create a new scope per {} block</p>
+   </div>
+   <div class="cb">
+      <pre><code class="language-javascript" id="l3-code">function example() {
   let x = &#x27;function scope&#x27;;
   if (true) {
     let x = &#x27;block scope&#x27;; // new x — shadows outer x
@@ -28,7 +62,26 @@ wrapper();</code></pre><button class="run" onclick="runCode('l2')" style="backgr
   }
   console.log(&#x27;Outside block: &#x27; + x); // outer x unchanged
 }
-example();</code></pre><button class="run" onclick="runCode('l3')" style="background:#3b82f6;color:#0f172a;">&#9654; Run</button><div class="ow" id="l3-w"><div style="color:#4ade80;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">&#10003; Output</div><div class="out" id="l3-o"></div></div><div class="tip"><span style="color:#3b82f6;font-size:12px;font-weight:700;">&#128161; What happened?</span><p style="margin:4px 0 0;color:#94a3b8;font-size:13px;line-height:1.6;">The inner let x is a completely separate variable from the outer x. They shadow each other within their respective blocks but never interfere. var would NOT create a new scope here — it would share the same x.</p></div></div></div><div class="card"><div class="ch"><div style="font-size:11px;color:#3b82f6;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Example 4</div><h3 style="margin:0 0 4px;color:#f1f5f9;font-size:16px;">Temporal Dead Zone (TDZ)</h3><p style="margin:0;color:#94a3b8;font-size:13px;">const/let are hoisted but not initialized — accessing early crashes</p></div><div class="cb"><pre><code class="language-javascript" id="l4-code">const name1 = &#x27;global&#x27;;
+example();</code></pre>
+      <button class="run" onclick="runCode('l3')" style="background:#3b82f6;color:#0f172a;">&#9654; Run</button>
+      <div class="ow" id="l3-w">
+         <div style="color:#4ade80;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">&#10003; Output</div>
+         <div class="out" id="l3-o"></div>
+      </div>
+      <div class="tip">
+         <span style="color:#3b82f6;font-size:12px;font-weight:700;">&#128161; What happened?</span>
+         <p style="margin:4px 0 0;color:#94a3b8;font-size:13px;line-height:1.6;">The inner let x is a completely separate variable from the outer x. They shadow each other within their respective blocks but never interfere. var would NOT create a new scope here — it would share the same x.</p>
+      </div>
+   </div>
+</div>
+<div class="card">
+   <div class="ch">
+      <div style="font-size:11px;color:#3b82f6;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Example 4</div>
+      <h3 style="margin:0 0 4px;color:#f1f5f9;font-size:16px;">Temporal Dead Zone (TDZ)</h3>
+      <p style="margin:0;color:#94a3b8;font-size:13px;">const/let are hoisted but not initialized — accessing early crashes</p>
+   </div>
+   <div class="cb">
+      <pre><code class="language-javascript" id="l4-code">const name1 = &#x27;global&#x27;;
 
 function sample() {
   try {
@@ -44,4 +97,244 @@ function fixed() {
   const name1 = &#x27;local&#x27;; // declare FIRST
   console.log(name1);    // works fine
 }
-fixed();</code></pre><button class="run" onclick="runCode('l4')" style="background:#3b82f6;color:#0f172a;">&#9654; Run</button><div class="ow" id="l4-w"><div style="color:#4ade80;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">&#10003; Output</div><div class="out" id="l4-o"></div></div><div class="tip"><span style="color:#3b82f6;font-size:12px;font-weight:700;">&#128161; What happened?</span><p style="margin:4px 0 0;color:#94a3b8;font-size:13px;line-height:1.6;">JS sees const name1 inside sample() and reserves that name for the whole function scope. But it's uninitialized until that line. It won't fall back to the outer name1 — it throws a ReferenceError instead. The fix: always declare before you use.</p></div></div></div><div class="card"><div class="ch"><h3 style="margin:0;color:#f1f5f9;">Scope Quick Reference</h3></div><div style="overflow-x:auto;"><table><thead><tr><th>Feature</th><th>var</th><th>let / const</th></tr></thead><tbody><tr><td>Scope type</td><td>Function</td><td>Block ({})</td></tr><tr><td>Hoisted?</td><td>Yes (initialized to undefined)</td><td>Yes (TDZ — NOT initialized)</td></tr><tr><td>Safe before declaration?</td><td>Yes — gets undefined</td><td>No — ReferenceError</td></tr><tr><td>Re-declare in same scope?</td><td>Yes</td><td>No — SyntaxError</td></tr></tbody></table></div></div></div><footer>Built with &#10084;&#65039; for learning JavaScript</footer><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"><\/script><script>function runCode(eid){var el=document.getElementById(eid+'-code');var code=el.textContent||el.innerText;var out=[],orig=console.log;console.log=function(){out.push(Array.prototype.slice.call(arguments).map(function(x){return typeof x==='object'?JSON.stringify(x):String(x);}).join(' '));};try{eval(code);}catch(e){out.push('\u274c '+e.message);}console.log=orig;var w=document.getElementById(eid+'-w');document.getElementById(eid+'-o').textContent=out.length?out.join('\n'):'(no output)';w.style.display='block';w.className='ow fi';}</script></body></html>
+fixed();</code></pre>
+      <button class="run" onclick="runCode('l4')" style="background:#3b82f6;color:#0f172a;">&#9654; Run</button>
+      <div class="ow" id="l4-w">
+         <div style="color:#4ade80;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">&#10003; Output</div>
+         <div class="out" id="l4-o"></div>
+      </div>
+      <div class="tip">
+         <span style="color:#3b82f6;font-size:12px;font-weight:700;">&#128161; What happened?</span>
+         <p style="margin:4px 0 0;color:#94a3b8;font-size:13px;line-height:1.6;">JS sees const name1 inside sample() and reserves that name for the whole function scope. But it's uninitialized until that line. It won't fall back to the outer name1 — it throws a ReferenceError instead. The fix: always declare before you use.</p>
+      </div>
+   </div>
+</div>
+<div class="card">
+   <div class="ch">
+      <h3 style="margin:0;color:#f1f5f9;">Scope Quick Reference</h3>
+   </div>
+   <div style="overflow-x:auto;">
+      <table>
+         <thead>
+            <tr>
+               <th>Feature</th>
+               <th>var</th>
+               <th>let / const</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td>Scope type</td>
+               <td>Function</td>
+               <td>Block ({})</td>
+            </tr>
+            <tr>
+               <td>Hoisted?</td>
+               <td>Yes (initialized to undefined)</td>
+               <td>Yes (TDZ — NOT initialized)</td>
+            </tr>
+            <tr>
+               <td>Safe before declaration?</td>
+               <td>Yes — gets undefined</td>
+               <td>No — ReferenceError</td>
+            </tr>
+            <tr>
+               <td>Re-declare in same scope?</td>
+               <td>Yes</td>
+               <td>No — SyntaxError</td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+</div>
+</div>
+<footer>Built with &#10084;&#65039; for learning JavaScript</footer>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script><script>function runCode(eid){var el=document.getElementById(eid+'-code');var code=el.textContent||el.innerText;var out=[],orig=console.log;console.log=function(){out.push(Array.prototype.slice.call(arguments).map(function(x){return typeof x==='object'?JSON.stringify(x):String(x);}).join(' '));};try{eval(code);}catch(e){out.push('\u274c '+e.message);}console.log=orig;var w=document.getElementById(eid+'-w');document.getElementById(eid+'-o').textContent=out.length?out.join('\n'):'(no output)';w.style.display='block';w.className='ow fi';}</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+      <title>Lexical Scope | JS Concepts</title>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+      <link rel="stylesheet" href="css/lexical-scope.css">
+   </head>
+   <body>
+      <nav>
+         <a href="index.html" style="color:#94a3b8;font-size:14px;">&larr; All Concepts</a>
+         <span style="color:#3b82f6;font-weight:700;font-size:15px;">Lexical Scope</span>
+         <div style="display:flex;gap:16px;"><a href="closures.html" style="color:#94a3b8;font-size:13px;">&larr; Closures</a><a href="prototypes.html" style="color:#94a3b8;font-size:13px;">Prototypes &rarr;</a></div>
+      </nav>
+      <div class="hero">
+         <div class="badge" style="background:#3b82f622;color:#3b82f6;">🗺️ Lexical Scope</div>
+         <h1 style="font-size:2.2rem;font-weight:800;margin:0 0 8px;color:#f8fafc;">Lexical Scope</h1>
+         <p style="color:#94a3b8;font-size:1.05rem;margin:0 0 24px;">Scope determined by where code is written, not where it is called</p>
+         <div class="def" style="border-left:4px solid #3b82f6;background:#1e293b;">Lexical scope means a variable's accessibility is determined at author time — by where the function is written in the source code, not where or how it is called at runtime. JavaScript resolves variables by walking outward through enclosing scopes.</div>
+      </div>
+      <div class="wrap">
+         <div class="card">
+            <div class="ch">
+               <div style="font-size:11px;color:#3b82f6;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Example 1</div>
+               <h3 style="margin:0 0 4px;color:#f1f5f9;font-size:16px;">Scope Chain</h3>
+               <p style="margin:0;color:#94a3b8;font-size:13px;">Inner functions can read variables from all enclosing scopes</p>
+            </div>
+            <div class="cb">
+               <pre><code class="language-javascript" id="l1-code">const level1 = 'global';
+
+function scopeA() {
+  const level2 = 'scopeA';
+  function scopeB() {
+    const level3 = 'scopeB';
+    console.log(level3); // own scope
+    console.log(level2); // outer scope
+    console.log(level1); // global scope
+  }
+  scopeB();
+}
+scopeA();</code></pre>
+               <button class="run" onclick="runCode('l1')">&#9654; Run</button>
+               <div class="ow" id="l1-w">
+                  <div style="color:#4ade80;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">&#10003; Output</div>
+                  <div class="out" id="l1-o"></div>
+               </div>
+               <div class="tip">
+                  <span style="color:#3b82f6;font-size:12px;font-weight:700;">&#128161; What happened?</span>
+                  <p style="margin:4px 0 0;color:#94a3b8;font-size:13px;line-height:1.6;">JS walks outward through the scope chain until it finds each variable. scopeB can see its own scope, scopeA's scope, and the global scope — all at once.</p>
+               </div>
+            </div>
+         </div>
+         <div class="card">
+            <div class="ch">
+               <div style="font-size:11px;color:#3b82f6;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Example 2</div>
+               <h3 style="margin:0 0 4px;color:#f1f5f9;font-size:16px;">Lexical vs Dynamic Scope</h3>
+               <p style="margin:0;color:#94a3b8;font-size:13px;">Scope is locked where the function is WRITTEN, not where it is called</p>
+            </div>
+            <div class="cb">
+               <pre><code class="language-javascript" id="l2-code">const lang = 'JavaScript';
+
+function printLang() {
+  // Scope locked at definition time — not call time
+  console.log(lang);
+}
+function wrapper() {
+  const lang = 'Python'; // does NOT affect printLang
+  printLang();           // still prints 'JavaScript'
+}
+wrapper();</code></pre>
+               <button class="run" onclick="runCode('l2')">&#9654; Run</button>
+               <div class="ow" id="l2-w">
+                  <div style="color:#4ade80;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">&#10003; Output</div>
+                  <div class="out" id="l2-o"></div>
+               </div>
+               <div class="tip">
+                  <span style="color:#3b82f6;font-size:12px;font-weight:700;">&#128161; What happened?</span>
+                  <p style="margin:4px 0 0;color:#94a3b8;font-size:13px;line-height:1.6;">printLang was defined in the global scope, so it reads global lang='JavaScript'. The local lang='Python' inside wrapper() is invisible to it — lexical scope wins.</p>
+               </div>
+            </div>
+         </div>
+         <div class="card">
+            <div class="ch">
+               <div style="font-size:11px;color:#3b82f6;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Example 3</div>
+               <h3 style="margin:0 0 4px;color:#f1f5f9;font-size:16px;">Block Scope — let vs var</h3>
+               <p style="margin:0;color:#94a3b8;font-size:13px;">let and const create a new scope per {} block</p>
+            </div>
+            <div class="cb">
+               <pre><code class="language-javascript" id="l3-code">function example() {
+  let x = 'function scope';
+  if (true) {
+    let x = 'block scope'; // new x — shadows outer x
+    console.log('Inside block: ' + x);
+  }
+  console.log('Outside block: ' + x); // outer x unchanged
+}
+example();</code></pre>
+               <button class="run" onclick="runCode('l3')">&#9654; Run</button>
+               <div class="ow" id="l3-w">
+                  <div style="color:#4ade80;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">&#10003; Output</div>
+                  <div class="out" id="l3-o"></div>
+               </div>
+               <div class="tip">
+                  <span style="color:#3b82f6;font-size:12px;font-weight:700;">&#128161; What happened?</span>
+                  <p style="margin:4px 0 0;color:#94a3b8;font-size:13px;line-height:1.6;">The inner let x is a completely separate variable from the outer x. They shadow each other within their respective blocks but never interfere. var would NOT create a new scope here — it would share the same x.</p>
+               </div>
+            </div>
+         </div>
+         <div class="card">
+            <div class="ch">
+               <div style="font-size:11px;color:#3b82f6;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Example 4</div>
+               <h3 style="margin:0 0 4px;color:#f1f5f9;font-size:16px;">Temporal Dead Zone (TDZ)</h3>
+               <p style="margin:0;color:#94a3b8;font-size:13px;">const/let are hoisted but not initialized — accessing early crashes</p>
+            </div>
+            <div class="cb">
+               <pre><code class="language-javascript" id="l4-code">const name1 = 'global';
+
+function sample() {
+  try {
+    console.log(name1); // TDZ — crashes before const line
+    const name1 = 'local';
+  } catch(e) {
+    console.log('TDZ Error: ' + e.message);
+  }
+}
+sample();
+
+function fixed() {
+  const name1 = 'local'; // declare FIRST
+  console.log(name1);    // works fine
+}
+fixed();</code></pre>
+               <button class="run" onclick="runCode('l4')">&#9654; Run</button>
+               <div class="ow" id="l4-w">
+                  <div style="color:#4ade80;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;">&#10003; Output</div>
+                  <div class="out" id="l4-o"></div>
+               </div>
+               <div class="tip">
+                  <span style="color:#3b82f6;font-size:12px;font-weight:700;">&#128161; What happened?</span>
+                  <p style="margin:4px 0 0;color:#94a3b8;font-size:13px;line-height:1.6;">JS sees const name1 inside sample() and reserves that name for the whole function scope. But it's uninitialized until that line. It won't fall back to the outer name1 — it throws a ReferenceError instead. The fix: always declare before you use.</p>
+               </div>
+            </div>
+         </div>
+         <div class="card">
+            <div class="ch">
+               <h3 style="margin:0;color:#f1f5f9;">Scope Quick Reference</h3>
+            </div>
+            <div style="overflow-x:auto;">
+               <table>
+                  <thead>
+                     <tr>
+                        <th>Feature</th>
+                        <th>var</th>
+                        <th>let / const</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td>Scope type</td>
+                        <td>Function</td>
+                        <td>Block ({})</td>
+                     </tr>
+                     <tr>
+                        <td>Hoisted?</td>
+                        <td>Yes (initialized to undefined)</td>
+                        <td>Yes (TDZ — NOT initialized)</td>
+                     </tr>
+                     <tr>
+                        <td>Safe before declaration?</td>
+                        <td>Yes — gets undefined</td>
+                        <td>No — ReferenceError</td>
+                     </tr>
+                     <tr>
+                        <td>Re-declare in same scope?</td>
+                        <td>Yes</td>
+                        <td>No — SyntaxError</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+      </div>
+      <footer>Built with ❤️ for learning JavaScript</footer>
+      <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+      <script src="js/common.js"></script>
+   </body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "name": "js-concepts-guide",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "sass css:css --no-source-map",
+    "watch": "sass --watch css:css --no-source-map",
+    "serve": "npx serve -s .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vinothdhakshinamoorthy85/js-concepts-guide.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/vinothdhakshinamoorthy85/js-concepts-guide/issues"
+  },
+  "homepage": "https://github.com/vinothdhakshinamoorthy85/js-concepts-guide#readme",
+  "devDependencies": {
+    "sass": "^1.101.0"
+  }
+}

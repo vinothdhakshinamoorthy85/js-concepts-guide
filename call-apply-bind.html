@@ -1,18 +1,105 @@
->!DOCTYPE html>>html lang="en">>head>>meta charset="UTF-8">>meta name="viewport" content="width=device-width,initial-scale=1.0">>title>call / apply / bind | JS Concepts>/title>>link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">>style>body{background:#0f172a;color:#e2e8f0;font-family:system-ui,sans-serif;margin:0;}*{box-sizing:border-box;}nav{position:sticky;top:0;z-index:100;background:rgba(15,23,42,.96);backdrop-filter:blur(8px);border-bottom:1px solid #1e293b;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;}.wrap{max-width:860px;margin:0 auto;padding:0 24px;}.hero{max-width:860px;margin:0 auto;padding:52px 24px 28px;}.badge{display:inline-block;padding:4px 14px;border-radius:9999px;font-size:12px;font-weight:700;margin-bottom:14px;}.def{border-radius:8px;padding:16px 20px;margin-bottom:40px;line-height:1.7;font-size:15px;color:#cbd5e1;}.card{background:#1e293b;border:1px solid #334155;border-radius:12px;overflow:hidden;margin-bottom:28px;}.ch{padding:16px 20px;border-bottom:1px solid #334155;}.cb{padding:20px;}.ow{margin-top:14px;display:none;}.out{background:#020617;border:1px solid #4ade80;border-radius:8px;padding:12px 16px;font-family:Consolas,'Courier New',monospace;font-size:13px;color:#4ade80;white-space:pre-wrap;min-height:38px;}.tip{background:#0f172a;border:1px solid #334155;border-radius:8px;padding:12px 16px;margin-top:16px;}button.run{padding:9px 26px;border:none;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer;transition:.15s;display:block;margin:0 0 0 auto;}button.run:hover{opacity:.85;transform:translateY(-1px);}table{width:100%;border-collapse:collapse;}th{text-align:left;padding:12px 16px;background:#0f172a;font-size:13px;color:#94a3b8;border-bottom:1px solid #334155;font-weight:600;}td{padding:11px 16px;border-bottom:1px solid #1e293b;font-size:14px;color:#cbd5e1;}tr:last-child td{border-bottom:none;}footer{text-align:center;color:#475569;font-size:13px;padding:28px;border-top:1px solid #1e293b;margin-top:48px;}a{text-decoration:none;}@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;}}.fi{animation:fi .3s ease;}>/style>>/head>>body>>nav>>a href="index.html" style="color:#94a3b8;font-size:14px;">&larr; All Concepts>/a>>span style="color:#ec4899;font-weight:700;font-size:15px;">call / apply / bind>/span>>div style="display:flex;gap:16px;">>a href="this-keyword.html" style="color:#94a3b8;font-size:13px;">&larr; this Keyword>/a>>span>>/span>>/div>>/nav>>div class="hero">>div class="badge" style="background:#ec489922;color:#ec4899;">call / apply / bind>/div>>h1 style="font-size:2.2rem;font-weight:800;margin:0 0 8px;color:#f8fafc;">call / apply / bind>/h1>>p style="color:#94a3b8;font-size:1.05rem;margin:0 0 24px;">Three ways to manually control what this points to>/p>>div class="def" style="border-left:4px solid #ec4899;background:#1e293b;">call(), apply(), and bind() all let you set this manually for any function. call and apply invoke the function immediately. bind returns a new function with this permanently locked.>/div>>/div>>div class="wrap">>div class="card">>div class="ch">>div style="font-size:11px;color:#ec4899;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Example 1>/div>>h3 style="margin:0 0 4px;color:#f1f5f9;">call - Invoke Immediately>/h3>>p style="margin:0;color:#94a3b8;font-size:13px;">Set this and pass arguments one by one>/p>>/div>>div class="cb">>pre>>code class="language-javascript" id="a1-code">function introduce(city, state) {
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>call / apply / bind | JS Concepts</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+    <link rel="stylesheet" href="css/call-apply-bind.css">
+  </head>
+  <body>
+    <nav>
+      <a href="index.html" style="color:#94a3b8;font-size:14px;">&larr; All Concepts</a>
+      <span style="color:#ec4899;font-weight:700;font-size:15px;">call / apply / bind</span>
+      <div style="display:flex;gap:16px;"><a href="this-keyword.html" style="color:#94a3b8;font-size:13px;">&larr; this Keyword</a></div>
+    </nav>
+
+    <div class="hero">
+      <div class="badge" style="background:#ec489922;color:#ec4899;">call / apply / bind</div>
+      <h1 style="font-size:2.2rem;font-weight:800;margin:0 0 8px;color:#f8fafc;">call / apply / bind</h1>
+      <p style="color:#94a3b8;font-size:1.05rem;margin:0 0 24px;">Three ways to manually control what this points to</p>
+      <div class="def" style="border-left:4px solid #ec4899;background:#1e293b;">call(), apply(), and bind() all let you set this manually for any function. call and apply invoke the function immediately. bind returns a new function with this permanently locked.</div>
+    </div>
+
+    <div class="wrap">
+      <div class="card">
+        <div class="ch">
+          <div style="font-size:11px;color:#ec4899;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Example 1</div>
+          <h3 style="margin:0 0 4px;color:#f1f5f9;">call - Invoke Immediately</h3>
+          <p style="margin:0;color:#94a3b8;font-size:13px;">Set this and pass arguments one by one</p>
+        </div>
+        <div class="cb">
+          <pre><code class="language-javascript" id="a1-code">function introduce(city, state) {
   console.log("Hi I'm " + this.name + ' from ' + city + ', ' + state);
-  }
-  const user = { name: 'Vinoth' };
-  introduce.call(user, 'Minneapolis', 'MN');>/code>>/pre>>button class="run" onclick="runCode('a1')" style="background:#ec4899;color:#0f172a;">&#9654; Run>/button>>div class="ow" id="a1-w">>div style="color:#4ade80;font-size:11px;font-weight:700;margin-bottom:6px;">Output>/div>>div class="out" id="a1-o">>/div>>/div>>div class="tip">>span style="color:#ec4899;font-size:12px;font-weight:700;">What happened?>/span>>p style="margin:4px 0 0;color:#94a3b8;font-size:13px;">call() immediately invokes introduce with this set to user. Arguments are passed one by one after the context object.>/p>>/div>>/div>>/div>>div class="card">>div class="ch">>div style="font-size:11px;color:#ec4899;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Example 2>/div>>h3 style="margin:0 0 4px;color:#f1f5f9;">call - Method Borrowing>/h3>>p style="margin:0;color:#94a3b8;font-size:13px;">Borrow a method from one object to use on another>/p>>/div>>div class="cb">>pre>>code class="language-javascript" id="a2-code">const person = {
-    name: 'Vinoth',
-      sayhi() { console.log('Hi I am ' + this.name); }
-      };
-      const other = { name: 'Alice' };
-      person.sayhi.call(other);
-      person.sayhi.call(person);>/code>>/pre>>button class="run" onclick="runCode('a2')" style="background:#ec4899;color:#0f172a;">&#9654; Run>/button>>div class="ow" id="a2-w">>div style="color:#4ade80;font-size:11px;font-weight:700;margin-bottom:6px;">Output>/div>>div class="out" id="a2-o">>/div>>/div>>div class="tip">>span style="color:#ec4899;font-size:12px;font-weight:700;">What happened?>/span>>p style="margin:4px 0 0;color:#94a3b8;font-size:13px;">call() borrows sayhi and runs it in the context of other. No need to duplicate the method.>/p>>/div>>/div>>/div>>div class="card">>div class="ch">>div style="font-size:11px;color:#ec4899;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Example 3>/div>>h3 style="margin:0 0 4px;color:#f1f5f9;">apply - Args as Array>/h3>>p style="margin:0;color:#94a3b8;font-size:13px;">Same as call but arguments passed as an array>/p>>/div>>div class="cb">>pre>>code class="language-javascript" id="a3-code">function introduce(city, state) {
-        console.log("Hi I'm " + this.name + ' from ' + city + ', ' + state);
-        }
-        const user = { name: 'Vinoth' };
-        const args = ['Minneapolis', 'MN'];
-        introduce.apply(user, args);
-        const numbers = [5, 2, 9, 1, 7];
-        console.log('Max: ' + Math.max.apply(null, numbers));>/code>>/pre>>button class="run" onclick="runCode('a3')" style="background:#ec4899
+}
+const user = { name: 'Vinoth' };
+introduce.call(user, 'Minneapolis', 'MN');</code></pre>
+          <button class="run" onclick="runCode('a1')" style="background:#ec4899;color:#0f172a;">&#9654; Run</button>
+          <div class="ow" id="a1-w"><div style="color:#4ade80;font-size:11px;font-weight:700;margin-bottom:6px;">Output</div><div class="out" id="a1-o"></div></div>
+          <div class="tip"><span style="color:#ec4899;font-size:12px;font-weight:700;">What happened?</span><p style="margin:4px 0 0;color:#94a3b8;font-size:13px;">call() immediately invokes introduce with this set to user. Arguments are passed one by one after the context object.</p></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch">
+          <div style="font-size:11px;color:#ec4899;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Example 2</div>
+          <h3 style="margin:0 0 4px;color:#f1f5f9;">call - Method Borrowing</h3>
+          <p style="margin:0;color:#94a3b8;font-size:13px;">Borrow a method from one object to use on another</p>
+        </div>
+        <div class="cb">
+          <pre><code class="language-javascript" id="a2-code">const person = { name: 'Vinoth', sayhi() { console.log('Hi I am ' + this.name); } };
+const other = { name: 'Alice' };
+person.sayhi.call(other);
+person.sayhi.call(person);</code></pre>
+          <button class="run" onclick="runCode('a2')" style="background:#ec4899;color:#0f172a;">&#9654; Run</button>
+          <div class="ow" id="a2-w"><div style="color:#4ade80;font-size:11px;font-weight:700;margin-bottom:6px;">Output</div><div class="out" id="a2-o"></div></div>
+          <div class="tip"><span style="color:#ec4899;font-size:12px;font-weight:700;">What happened?</span><p style="margin:4px 0 0;color:#94a3b8;font-size:13px;">call() borrows sayhi and runs it in the context of other. No need to duplicate the method.</p></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch">
+          <div style="font-size:11px;color:#ec4899;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Example 3</div>
+          <h3 style="margin:0 0 4px;color:#f1f5f9;">apply - Args as Array</h3>
+          <p style="margin:0;color:#94a3b8;font-size:13px;">Same as call but arguments passed as an array</p>
+        </div>
+        <div class="cb">
+          <pre><code class="language-javascript" id="a3-code">function introduce(city, state) {
+  console.log("Hi I'm " + this.name + ' from ' + city + ', ' + state);
+}
+const user = { name: 'Vinoth' };
+const args = ['Minneapolis', 'MN'];
+introduce.apply(user, args);
+const numbers = [5, 2, 9, 1, 7];
+console.log('Max: ' + Math.max.apply(null, numbers));</code></pre>
+          <button class="run" onclick="runCode('a3')" style="background:#ec4899;color:#0f172a;">&#9654; Run</button>
+          <div class="ow" id="a3-w"><div style="color:#4ade80;font-size:11px;font-weight:700;margin-bottom:6px;">Output</div><div class="out" id="a3-o"></div></div>
+          <div class="tip"><span style="color:#ec4899;font-size:12px;font-weight:700;">What happened?</span><p style="margin:4px 0 0;color:#94a3b8;font-size:13px;">apply() accepts arguments as an array — useful when you already have an array of args.</p></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch">
+          <div style="font-size:11px;color:#ec4899;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">Example 4</div>
+          <h3 style="margin:0 0 4px;color:#f1f5f9;">bind - Permanent this</h3>
+          <p style="margin:0;color:#94a3b8;font-size:13px;">bind returns a new function with this set permanently</p>
+        </div>
+        <div class="cb">
+          <pre><code class="language-javascript" id="a4-code">function greet(city, country) { console.log(this.name + ' from ' + city + ', ' + country); }
+const user = { name: 'Vinoth' };
+const bound = greet.bind(user);
+bound('Minneapolis', 'USA');</code></pre>
+          <button class="run" onclick="runCode('a4')" style="background:#ec4899;color:#0f172a;">&#9654; Run</button>
+          <div class="ow" id="a4-w"><div style="color:#4ade80;font-size:11px;font-weight:700;margin-bottom:6px;">Output</div><div class="out" id="a4-o"></div></div>
+          <div class="tip"><span style="color:#ec4899;font-size:12px;font-weight:700;">What happened?</span><p style="margin:4px 0 0;color:#94a3b8;font-size:13px;">bind returns a new function where this is locked to user — call it later or pass it around safely.</p></div>
+        </div>
+      </div>
+
+    </div>
+
+    <footer>Built with ❤️ for learning JavaScript</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="js/common.js"></script>
+  </body>
+</html>
